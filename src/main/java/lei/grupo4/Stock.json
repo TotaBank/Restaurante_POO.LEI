@@ -1,0 +1,14 @@
+{
+  "1": {"nome": "Carne", "quantidade": 50, "stockMinimo": 5},
+  "2": {"nome": "Queijo", "quantidade": 30, "stockMinimo": 3},
+  "3": {"nome": "Pão", "quantidade": 40, "stockMinimo": 5},
+  "4": {"nome": "Alface", "quantidade": 20, "stockMinimo": 2},
+  "5": {"nome": "MolhoCesar", "quantidade": 15, "stockMinimo": 2},
+  "6": {"nome": "FrangoGrelhado", "quantidade": 15, "stockMinimo": 2},
+  "7": {"nome": "Massa", "quantidade": 20, "stockMinimo": 3},
+  "8": {"nome": "MolhoTomate", "quantidade": 25, "stockMinimo": 5},
+  "9": {"nome": "Água Mineral 500ml", "quantidade": 50, "stockMinimo": 10},
+  "10": {"nome": "Refrigerante 330ml", "quantidade": 50, "stockMinimo": 10},
+  "11": {"nome": "Pudim", "quantidade": 10, "stockMinimo": 2},
+  "12": {"nome": "Fruta", "quantidade": 15, "stockMinimo": 3}
+}

@@ -21,4 +21,6 @@ public class MenuItem {
         this.mDisponivel = pDisponivel;
         this.mIngredientes = pIngredientes;
     }
+
+    public float obterPreco(){return this.mPreco;}
 }

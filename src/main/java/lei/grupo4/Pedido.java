@@ -26,11 +26,11 @@ public class Pedido {
         this.empregadoMesa = pEmpregadoMesa;
     }
 
-    public void adicionarItem(MenuItem pItem, int pQtd){
-
+    public void adicionarItem(PedidoItem pItem){
+        this.mListaItems.add(pItem);
     }
-    public void removerItem(MenuItem pItem){
-
+    public void removerItem(PedidoItem pItem){
+        this.mListaItems.remove(pItem);
     }
 
     public void confirmar(){

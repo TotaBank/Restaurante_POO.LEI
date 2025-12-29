@@ -25,7 +25,7 @@ public class Reserva {
             LocalDateTime pDataHora,
             int pNumPessoas,
             String pNomeReserva){
-
+        Mesa mesaParaReserva = null;
         List<Mesa> mesasPossiveis = Mesa.obterPorCapacidade(pNumPessoas);
         List<Reserva> reservasDoDia = Reserva.obterPorData(pDataHora.toLocalDate());
 
@@ -33,7 +33,7 @@ public class Reserva {
             for (Mesa mesa : mesasPossiveis){
 
             }
-            return new Reserva(pDataHora, pNumPessoas, pNomeReserva, );
+            return new Reserva(pDataHora, pNumPessoas, pNomeReserva, mesaParaReserva);
         } else {
             return null;
         }

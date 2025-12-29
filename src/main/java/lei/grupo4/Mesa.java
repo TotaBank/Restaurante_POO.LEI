@@ -30,9 +30,10 @@ public class Mesa {
             JSONObject dataForCurrentId = root.getJSONObject(currentId);
             //falta verificar e comecar a fazer a funcao
         }
+        return null;
     }
     public static List<Mesa> obterPorCapacidade(int pNumPessoas){
-        for
+        return null;
     }
 
 }

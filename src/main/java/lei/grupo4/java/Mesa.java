@@ -29,15 +29,15 @@ public class Mesa {
         return ret;
     }
 
-    public int getmId(){
+    public int obterId(){
         return this.mId;
     }
 
-    public int getmCapacidade(){
+    public int obterCapacidade(){
         return this.mCapacidade;
     }
 
-    public EstadoMesa getmEstado(){
+    public EstadoMesa obterEstado(){
         return this.mEstado;
     }
 

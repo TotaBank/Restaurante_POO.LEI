@@ -33,7 +33,7 @@ public class Main {
 
             switch (opcao) {
                 case 1 -> criarReserva(sc);
-                case 2 -> criarPedido(sc);
+               // case 2 -> criarPedido(sc);
                 case 3 -> adicionarItemPedido(sc);
                 case 4 -> verTotalPedido(sc);
                 case 5 -> confirmarPedido(sc);
@@ -77,13 +77,13 @@ public class Main {
         }
     }
 
-
+/*
     private static void criarPedido(Scanner sc) {
         System.out.print("Numero da mesa: ");
         int idMesa = sc.nextInt();
 
         Mesa mesa = mesas.stream()
-                .filter(m -> m.getCapacidade() > 0 && m.estaDisponivel() == false)
+                .filter(m -> m.getmCapacidade() > 0 && m.estaDisponivel() == false)
                 .findFirst()
                 .orElse(null);
 
@@ -107,7 +107,7 @@ public class Main {
 
         System.out.println("Pedido criado com sucesso!");
     }
-
+    */
     private static void adicionarItemPedido(Scanner sc) {
         if (pedidos.isEmpty()) {
             System.out.println("Nao ha pedidos.");

@@ -7,17 +7,17 @@ import java.util.List;
 
 public class Reserva {
     private LocalDateTime dataHora;
-    private int numPessoas;
-    private String nomeReserva;
-    private Mesa mesa;
+    private int mNumPessoas;
+    private String mNomeReserva;
+    private Mesa mMesa;
 
     private static List<Reserva> reservas = new ArrayList<>();
 
     private Reserva(LocalDateTime dataHora, int numPessoas, String nomeReserva, Mesa mesa) {
         this.dataHora = dataHora;
-        this.numPessoas = numPessoas;
-        this.nomeReserva = nomeReserva;
-        this.mesa = mesa;
+        this.mNumPessoas = numPessoas;
+        this.mNomeReserva = nomeReserva;
+        this.mMesa = mesa;
     }
 
     public static Reserva criarReserva(LocalDateTime dataHora, int numPessoas, String nomeReserva, List<Mesa> mesas) {
@@ -31,12 +31,12 @@ public class Reserva {
 
         // Escolhe a primeira mesa disponível
         Mesa mesaSelecionada = mesasDisponiveis.get(0);
-        mesaSelecionada.reservar();
+        mesaSelecionada.mudarEstado(EstadoMesa.RESERVADA);
 
         Reserva novaReserva = new Reserva(dataHora, numPessoas, nomeReserva, mesaSelecionada);
         reservas.add(novaReserva);
 
-        System.out.println("Reserva criada na mesa " + mesaSelecionada.getmId() + " para " + numPessoas + " pessoas.");
+        System.out.println("Reserva criada na mesa " + mesaSelecionada.obterId() + " para " + numPessoas + " pessoas.");
         return novaReserva;
     }
 

@@ -15,8 +15,6 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
 
-        inicializarDados();
-
         int opcao;
         do {
             System.out.println("\n=== SISTEMA RESTAURANTE ===");
@@ -46,19 +44,7 @@ public class Main {
         sc.close();
     }
 
-    // =================== METODOS ===================
 
-    private static void inicializarDados() {
-        mesas.add(new Mesa(1, 2, EstadoMesa.LIVRE));
-        mesas.add(new Mesa(2, 4, EstadoMesa.LIVRE));
-        mesas.add(new Mesa(3, 6, EstadoMesa.LIVRE));
-
-        menu.add(new MenuItem(1, "Hamburguer", 8.5f, true, null));
-        menu.add(new MenuItem(2, "Pizza", 10.0f, true, null));
-        menu.add(new MenuItem(3, "Coca-Cola", 2.5f, true, null));
-
-        System.out.println("Dados iniciais carregados.");
-    }
 
     private static void criarReserva(Scanner sc) {
         System.out.print("Nome da reserva: ");

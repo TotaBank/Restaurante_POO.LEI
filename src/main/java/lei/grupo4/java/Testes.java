@@ -7,5 +7,6 @@ public class Testes {
         List<Mesa> todasAsMesas = Mesa.obterTodasAsMesas();
         System.out.println(todasAsMesas);
         System.out.println(Mesa.obterPorCapacidade(8));
+
     }
 }

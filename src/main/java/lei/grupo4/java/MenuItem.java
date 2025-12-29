@@ -23,4 +23,7 @@ public class MenuItem {
     }
 
     public float obterPreco(){return this.mPreco;}
+    public static boolean podeSerPreparado(MenuItem item){
+        return false;
+    }
 }

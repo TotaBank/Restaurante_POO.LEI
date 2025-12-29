@@ -1,4 +1,4 @@
-package lei.grupo4;
+package lei.grupo4.java;
 
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package lei.grupo4;
+package lei.grupo4.java;
 
 public class PedidoItem {
     MenuItem mMenuItem;

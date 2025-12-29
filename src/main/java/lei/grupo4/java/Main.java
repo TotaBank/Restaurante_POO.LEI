@@ -120,7 +120,7 @@ public class Main {
                 .orElse(null);
 
         if (item != null) {
-            pedido.adicionarItem(new PedidoItem(item, qtd, ""));
+            pedido.adicionarItem(new PedidoItem(item, ""));
             System.out.println("Item adicionado!");
         }
     }

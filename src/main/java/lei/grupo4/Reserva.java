@@ -1,45 +1,52 @@
 package lei.grupo4;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Reserva {
-    LocalDateTime mDataHora;
-    int mNumPessoas;
-    String mNomeReserva;
-    Mesa mMesaId;
-    private Reserva(
-            LocalDateTime pDataHora,
-            int pNumPessoas,
-            String pNomeReserva,
-            Mesa pMesaId
-    ){
-        this.mDataHora = pDataHora;
-        this.mNumPessoas = pNumPessoas;
-        this.mNomeReserva = pNomeReserva;
-        this.mMesaId = pMesaId;
+    private LocalDateTime dataHora;
+    private int numPessoas;
+    private String nomeReserva;
+    private Mesa mesa;
+
+    private static List<Reserva> reservas = new ArrayList<>();
+
+    private Reserva(LocalDateTime dataHora, int numPessoas, String nomeReserva, Mesa mesa) {
+        this.dataHora = dataHora;
+        this.numPessoas = numPessoas;
+        this.nomeReserva = nomeReserva;
+        this.mesa = mesa;
     }
 
-    public static Reserva criarReserva(
-            LocalDateTime pDataHora,
-            int pNumPessoas,
-            String pNomeReserva){
-        Mesa mesaParaReserva = null;
-        List<Mesa> mesasPossiveis = Mesa.obterPorCapacidade(pNumPessoas);
-        List<Reserva> reservasDoDia = Reserva.obterPorData(pDataHora.toLocalDate());
+    public static Reserva criarReserva(LocalDateTime dataHora, int numPessoas, String nomeReserva, List<Mesa> mesas) {
+        // Obter mesas disponíveis com capacidade suficiente
+        List<Mesa> mesasDisponiveis = Mesa.obterPorCapacidade(numPessoas);
 
-        if (mesasPossiveis != null){
-            for (Mesa mesa : mesasPossiveis){
-
-            }
-            return new Reserva(pDataHora, pNumPessoas, pNomeReserva, mesaParaReserva);
-        } else {
+        if (mesasDisponiveis.isEmpty()) {
+            System.out.println("Nao ha mesas disponiveis para este numero de pessoas.");
             return null;
         }
+
+        // Escolhe a primeira mesa disponível
+        Mesa mesaSelecionada = mesasDisponiveis.get(0);
+        mesaSelecionada.reservar();
+
+        Reserva novaReserva = new Reserva(dataHora, numPessoas, nomeReserva, mesaSelecionada);
+        reservas.add(novaReserva);
+
+        System.out.println("Reserva criada na mesa " + mesaSelecionada.getmId() + " para " + numPessoas + " pessoas.");
+        return novaReserva;
     }
 
-    public static List<Reserva> obterPorData(LocalDate pDataHora){
-        return null;
+    public static List<Reserva> obterPorData(LocalDate data) {
+        List<Reserva> resultado = new ArrayList<>();
+        for (Reserva r : reservas) {
+            if (r.dataHora.toLocalDate().equals(data)) {
+                resultado.add(r);
+            }
+        }
+        return resultado;
     }
 }

@@ -41,15 +41,8 @@ public class Mesa {
         return this.mEstado;
     }
 
-    public void reservar(){
-        //falta fazer, funcao para efeitos de teste
-        this.mEstado = EstadoMesa.RESERVADA;
-    }
-    public void ocupar(){
-        this.mEstado = EstadoMesa.OCUPADA;
-    }
-    public void liberar(){
-        this.mEstado = EstadoMesa.LIVRE;
+    public void mudarEstado(EstadoMesa pNovoEstado){
+        this.mEstado = pNovoEstado;
     }
 
     public static List<Mesa> obterTodasAsMesas(){

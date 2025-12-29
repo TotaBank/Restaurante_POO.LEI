@@ -9,7 +9,7 @@ import java.util.Scanner;
 import org.json.JSONArray;
 import org.json.JSONObject;
 public class Mesa {
-    private static final String CAMINHO_MESAS_JSON = "src/main/java/lei/grupo4/Mesas.json";
+    private static final String CAMINHO_MESAS_JSON = "src/main/java/lei/grupo4/resources/Mesas.json";
 
     int mId;
     int mCapacidade;

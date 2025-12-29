@@ -30,6 +30,29 @@ public class Mesa {
         return ret;
     }
 
+    public int getmId(){
+        return this.mId;
+    }
+
+    public int getmCapacidade(){
+        return this.mCapacidade;
+    }
+
+    public EstadoMesa getmEstado(){
+        return this.mEstado;
+    }
+
+    public void reservar(){
+        //falta fazer, funcao para efeitos de teste
+        this.mEstado = EstadoMesa.RESERVADA;
+    }
+    public void ocupar(){
+        this.mEstado = EstadoMesa.OCUPADA;
+    }
+    public void liberar(){
+        this.mEstado = EstadoMesa.LIVRE;
+    }
+
     public static List<Mesa> obterTodasAsMesas(){
         List<Mesa> listaDeMesas = new ArrayList<>();
         File jsonMesas = new File(CAMINHO_MESAS_JSON);

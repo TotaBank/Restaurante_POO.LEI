@@ -1,18 +1,20 @@
 package lei.grupo4.java;
 
-import java.util.List;
-
 public class Testes {
     public static void main(String[] args){
-        List<Mesa> todasAsMesas = Mesa.obterTodasAsMesas();
-        System.out.println(todasAsMesas);
-        System.out.println(Mesa.obterPorCapacidade(8));
-/*
-        Pedido pedido1 = new Pedido(1,1);
-        MenuItem hamburger;
-        MenuItem.podeSerPreparado(hamburger);
-            PedidoItem pedidoitem1 = new PedidoItem(hamburger, "sem alface");
-            pedido1.adicionarItem(pedidoitem1);
-            */ //lógica dos pedidos
+
+        // Cria o MenuItem
+        MenuItem hamburger = new MenuItem(1, "Hambúrguer Clássico", 8.5f, true, null);
+
+        // Verifica se pode ser preparado
+        if (hamburger.podeSerPreparado()) {
+            System.out.println("Hambúrguer pode ser preparado");
+
+            // Remove stock
+            hamburger.consumirStock();
+            System.out.println("Stock atualizado após pedido");
+        } else {
+            System.out.println("Hambúrguer NÃO pode ser preparado");
+        }
     }
 }

@@ -1,1 +1,28 @@
-{}
+{
+    "2025-12-30": {
+        "JANTAR": [{
+            "mesa": 2,
+            "numeroPessoas": 3,
+            "nome": "Tomas",
+            "id": "ba1f563d-7094-49ca-aa3a-66b47416c785"
+        }],
+        "ALMOCO": []
+    },
+    "2025-12-31": {
+        "JANTAR": [
+            {
+                "mesa": 5,
+                "numeroPessoas": 8,
+                "nome": "Tomas",
+                "id": "5f96d3de-1ca2-4b16-8a8e-fd034fbe556a"
+            },
+            {
+                "mesa": 2,
+                "numeroPessoas": 3,
+                "nome": "Tomas",
+                "id": "5febaf8a-0cb8-4734-be56-c58af9da2c1e"
+            }
+        ],
+        "ALMOCO": []
+    }
+}

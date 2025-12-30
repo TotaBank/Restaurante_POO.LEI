@@ -72,6 +72,9 @@ public class Reserva {
 
 
     }
+    public void removerReserva(){
+
+    }
 
 
 

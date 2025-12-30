@@ -2,13 +2,14 @@ package lei.grupo4.java;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.sql.Array;
+import java.sql.Ref;
+import java.time.LocalDate;
+import java.util.*;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 
 class CompararPorCapacidade implements Comparator<Mesa>{
     @Override
@@ -18,10 +19,10 @@ class CompararPorCapacidade implements Comparator<Mesa>{
 }
 public class Mesa {
     private static final String CAMINHO_MESAS_JSON = "src/main/java/lei/grupo4/resources/Mesas.json";
+    private static final String CAMINHO_RESERVAS_JSON = "src/main/java/lei/grupo4/resources/Reservas.json";
 
     Integer mId;
     Integer mCapacidade;
-    EstadoMesa mEstado;
     public Mesa(
             int pId,
             int pCapacidade,
@@ -29,7 +30,6 @@ public class Mesa {
     ){
         this.mId = pId;
         this.mCapacidade = pCapacidade;
-        this.mEstado = pEstado;
     }
     public String toString(){
         String ret ="";
@@ -43,14 +43,6 @@ public class Mesa {
 
     public int obterCapacidade(){
         return this.mCapacidade;
-    }
-
-    public EstadoMesa obterEstado(){
-        return this.mEstado;
-    }
-
-    public void mudarEstado(EstadoMesa pNovoEstado){
-        this.mEstado = pNovoEstado;
     }
 
     public static List<Mesa> obterTodasAsMesas(){
@@ -87,6 +79,23 @@ public class Mesa {
             }
         }
         return mesasCapazes;
+    }
+
+    public boolean podeSerReservada(LocalDate pData, Refeicao pRefeicao){
+        String dados = Utilitarios.carregarOuInicializarFicheiroJSON(CAMINHO_RESERVAS_JSON, FicheiroJSON.OBJECT);
+            JSONObject dias = new JSONObject(dados);
+            Iterator<String> dia = dias.keys();
+            if (!dia.hasNext()){ //caso nao exista o dia, nenhuma marcacao foi feita, estao todas livres
+                return true;
+            }
+            JSONArray refeicao = dias.getJSONObject(pData.toString()).getJSONArray(pRefeicao.toString());
+            for(int i = 0; i < refeicao.length(); i++){
+                JSONObject informacaoReserva = refeicao.getJSONObject(i);
+                int mesa = informacaoReserva.getInt("mesa");
+                if (this.mId == mesa)
+                    return false;
+            }
+            return true;
     }
 
 

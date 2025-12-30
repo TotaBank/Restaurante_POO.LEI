@@ -49,4 +49,15 @@ public class Utilitarios {
         }
     }
 
+
+        public static boolean apagarFicheiro(String caminho) {
+            File ficheiro = new File(caminho);
+
+            if (!ficheiro.exists()) {
+                return false; // nada para apagar
+            }
+
+            return ficheiro.delete();
+        }
+
 }

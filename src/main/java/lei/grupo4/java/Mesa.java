@@ -23,7 +23,7 @@ public class Mesa {
 
     Integer mId;
     Integer mCapacidade;
-    public Mesa(
+    private Mesa(
             int pId,
             int pCapacidade
     ){
@@ -35,7 +35,22 @@ public class Mesa {
         ret+=String.format("Mesa: %d\nCapacidade: %d", this.mId, this.mCapacidade);
         return ret;
     }
-
+    public static Mesa criarMesa(int pId, int pCapacidade){
+        if(obterMesaPorId(pId) == null){
+            //opcional, fazer o criar mesa, nao vai ser muito usado
+            //caso esta funcao seja feita tambem tem que se fazer uma funcao para registar e apagar a mesa do json
+        }
+        return null;
+    }
+    public static Mesa obterMesaPorId(int pId){
+        List<Mesa> todasAsMesas = obterTodasAsMesas();
+        for(Mesa mesa : todasAsMesas){
+            if (mesa.mId == pId){
+                return mesa;
+            }
+        }
+        return null;
+    }
     public int obterId(){
         return this.mId;
     }

@@ -3,14 +3,9 @@ package lei.grupo4.java;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.UUID;
 
 public class Reserva {
@@ -35,11 +30,9 @@ public class Reserva {
         List<Mesa> mesasComCapacidade = Mesa.obterPorCapacidade(pNumPessoas);
         List<Mesa> mesasDisponiveis = new ArrayList<>();
         for (Mesa mesa : mesasComCapacidade){
-            if(mesa.mEstado == EstadoMesa.LIVRE)
+            if(mesa.podeSerReservada(pData, pRefeicao))
                 mesasDisponiveis.add(mesa);
-        } // ha um problema, tamos a atualizar o estado da mesa com membros de dados mas deviamos estar
-        //a utilizar o ficheiro json
-        //é necessario olhar para o dia refeicao e mesa
+        }
         if (mesasDisponiveis.isEmpty()) {
             System.out.println("Nao ha mesas disponiveis para este numero de pessoas.");
             return null;
@@ -47,39 +40,39 @@ public class Reserva {
 
         // Escolhe a primeira mesa disponível
         Mesa mesaSelecionada = mesasDisponiveis.get(0);
-        mesaSelecionada.mudarEstado(EstadoMesa.RESERVADA);
 
         Reserva novaReserva = new Reserva(pData, pRefeicao, pNumPessoas, nomeReserva, mesaSelecionada);
-        Reserva.registarReserva(novaReserva);
+        novaReserva.registarReserva();
         return novaReserva;
     }
-    public static void registarReserva(Reserva pReserva){
-        File jsonReservas = new File(CAMINHO_RESERVAS_JSON);
-        String dados = "";
-        try(Scanner r = new Scanner(jsonReservas)){
-            while (r.hasNextLine()) {
-                dados +=r.nextLine();
-
-            }
-            JSONArray reservas = new JSONArray(dados);
-            JSONObject novaReserva = new JSONObject();
-            novaReserva.put("id", UUID.randomUUID());
-            novaReserva.put("data", pReserva.mData);
-            novaReserva.put("refeicao", pReserva.mRefeicao);
-            novaReserva.put("numeroPessoas", pReserva.mNumPessoas);
-            novaReserva.put("nome", pReserva.mNomeReserva);
-            novaReserva.put("mesa", pReserva.mMesa.mId);
-            reservas.put(novaReserva);
-
-            try (FileWriter writer = new FileWriter(jsonReservas, false)) {
-                writer.write(reservas.toString(4));
+    public void registarReserva(){
+            String dados = Utilitarios.carregarOuInicializarFicheiroJSON(CAMINHO_RESERVAS_JSON, FicheiroJSON.OBJECT);
+            JSONObject reservas = new JSONObject(dados);
+            JSONObject objetoDia;
+            if (reservas.has(this.mData.toString())){
+                objetoDia = reservas.getJSONObject(this.mData.toString());
+            } else {
+                objetoDia = new JSONObject();
+                objetoDia.put("ALMOCO", new JSONArray());
+                objetoDia.put("JANTAR", new JSONArray());
+                reservas.put(this.mData.toString(), objetoDia);
             }
 
-        } catch(IOException e){
-            System.err.println("Erro ao ler o ficheiro");
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+            JSONArray refeicao = reservas.getJSONObject(this.mData.toString()).getJSONArray(this.mRefeicao.toString());
+            JSONObject reserva = new JSONObject();
+            reserva.put("id", UUID.randomUUID());
+            reserva.put("mesa", this.mMesa.obterId());
+            reserva.put("nome", this.mNomeReserva);
+            reserva.put("numeroPessoas", this.mNumPessoas);
+            refeicao.put(reserva);
+
+
+
+            Utilitarios.escreverJsonEmFicheiro(reservas, CAMINHO_RESERVAS_JSON);
+
+
     }
+
+
 
 }

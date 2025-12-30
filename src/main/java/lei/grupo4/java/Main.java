@@ -31,7 +31,7 @@ public class Main {
             sc.nextLine();
 
             switch (opcao) {
-              //  case 1 -> criarReserva(sc);
+                case 1 -> criarReserva(sc);
                // case 2 -> criarPedido(sc);
                 case 3 -> adicionarItemPedido(sc);
                 case 4 -> verTotalPedido(sc);
@@ -45,6 +45,63 @@ public class Main {
         sc.close();
     }
 
+
+
+    private static void criarReserva(Scanner sc) {
+
+        System.out.println("\n=== CRIAR RESERVA ===");
+
+        // Data
+        System.out.print("Dia: ");
+        int mDia = sc.nextInt();
+        System.out.print("Mes (1-12): ");
+        int mMes = sc.nextInt();
+        System.out.print("Ano (ex: 2025): ");
+        int mAno = sc.nextInt();
+        sc.nextLine();
+
+        LocalDate mData = LocalDate.of(mAno, mMes, mDia);
+
+        // Refeição
+        System.out.println("Tipo de refeicao:");
+        System.out.println("1 - Almoço");
+        System.out.println("2 - Jantar");
+        System.out.print("Opcao: ");
+        int mOpcaoRefeicao = sc.nextInt();
+        sc.nextLine();
+
+        Refeicao mRefeicao;
+        if (mOpcaoRefeicao == 1) {
+            mRefeicao = Refeicao.ALMOCO;
+        } else if (mOpcaoRefeicao == 2) {
+            mRefeicao = Refeicao.JANTAR;
+        } else {
+            System.out.println("Refeicao invalida!");
+            return;
+        }
+
+        // Número de pessoas
+        System.out.print("Numero de pessoas: ");
+        int mNumPessoas = sc.nextInt();
+        sc.nextLine();
+
+        // Nome da reserva
+        System.out.print("Nome da reserva: ");
+        String mNome = sc.nextLine();
+
+        Reserva mReserva = Reserva.criarReserva(
+                mData,
+                mRefeicao,
+                mNumPessoas,
+                mNome
+        );
+
+        if (mReserva != null) {
+            System.out.println("Reserva criada com sucesso!");
+        } else {
+            System.out.println("Nao foi possivel criar a reserva.");
+        }
+    }
 
 /*
     private static void criarReserva(Scanner sc) {

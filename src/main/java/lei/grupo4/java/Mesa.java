@@ -81,22 +81,44 @@ public class Mesa {
         return mesasCapazes;
     }
 
-    public boolean podeSerReservada(LocalDate pData, Refeicao pRefeicao){
-        String dados = Utilitarios.carregarOuInicializarFicheiroJSON(CAMINHO_RESERVAS_JSON, FicheiroJSON.OBJECT);
-            JSONObject dias = new JSONObject(dados);
-            Iterator<String> dia = dias.keys();
-            if (!dia.hasNext()){ //caso nao exista o dia, nenhuma marcacao foi feita, estao todas livres
-                return true;
-            }
-            JSONArray refeicao = dias.getJSONObject(pData.toString()).getJSONArray(pRefeicao.toString());
-            for(int i = 0; i < refeicao.length(); i++){
-                JSONObject informacaoReserva = refeicao.getJSONObject(i);
-                int mesa = informacaoReserva.getInt("mesa");
-                if (this.mId == mesa)
-                    return false;
-            }
+    public boolean podeSerReservada(LocalDate pData, Refeicao pRefeicao) {
+
+        String mDados = Utilitarios.carregarOuInicializarFicheiroJSON(
+                CAMINHO_RESERVAS_JSON,
+                FicheiroJSON.OBJECT
+        );
+
+        JSONObject mDias = new JSONObject(mDados);
+
+        String mDataStr = pData.toString();
+        String mRefeicaoStr = pRefeicao.toString();
+
+        //  NÃO EXISTE O DIA → LIVRE
+        if (!mDias.has(mDataStr)) {
             return true;
+        }
+
+        JSONObject mDia = mDias.getJSONObject(mDataStr);
+
+        //  EXISTE DIA, MAS NÃO EXISTE REFEIÇÃO → LIVRE
+        if (!mDia.has(mRefeicaoStr)) {
+            return true;
+        }
+
+        JSONArray mReservas = mDia.getJSONArray(mRefeicaoStr);
+
+        for (int i = 0; i < mReservas.length(); i++) {
+            JSONObject mInfoReserva = mReservas.getJSONObject(i);
+            int mMesa = mInfoReserva.getInt("mesa");
+
+            if (this.mId == mMesa) {
+                return false; //  mesa já reservada
+            }
+        }
+
+        return true; //  mesa livre
     }
+
 
 
 

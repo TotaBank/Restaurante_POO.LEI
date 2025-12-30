@@ -1,13 +1,18 @@
 package lei.grupo4.java;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
 public class Stock {
-
+    private static final String CAMINHO_STOCK_JSON ="src/main/java/lei/grupo4/resources/Stock.json";
     private int mId;
     private String mNome;
     private int mQuantidade;
@@ -115,6 +120,53 @@ public class Stock {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static class Ingrediente {
+        private int id;
+        private String nome;
+        private int quantidade;
+
+        public Ingrediente(int id, String nome, int quantidade) {
+            this.id = id;
+            this.nome = nome;
+            this.quantidade = quantidade;
+        }
+
+        public int getQuantidade() {
+            return quantidade;
+        }
+    }
+    //Coloca o ficheiro stock em um MAPA
+    public static Map<Integer, Ingrediente> obterStock() {
+        Map<Integer, Ingrediente> stock = new HashMap<>();
+        File ficheiro = new File(CAMINHO_STOCK_JSON);
+        String dados = "";
+
+        try (Scanner sc = new Scanner(ficheiro)) {
+            while (sc.hasNextLine()) {
+                dados += sc.nextLine();
+            }
+
+            JSONObject jsonStock = new JSONObject(dados);
+
+            for (String key : jsonStock.keySet()) {
+                int id = Integer.parseInt(key);
+                JSONObject ingr = jsonStock.getJSONObject(key);
+
+                String nome = ingr.getString("nome");
+                int quantidade = ingr.getInt("quantidade");
+
+                stock.put(id, new Ingrediente(id, nome, quantidade));
+            }
+
+        } catch (IOException e) {
+            System.err.println("Erro ao ler o ficheiro Stock.json");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        return stock;
     }
 
 

@@ -1,5 +1,6 @@
 package lei.grupo4.java;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class Main {
             sc.nextLine();
 
             switch (opcao) {
-                case 1 -> criarReserva(sc);
+              //  case 1 -> criarReserva(sc);
                // case 2 -> criarPedido(sc);
                 case 3 -> adicionarItemPedido(sc);
                 case 4 -> verTotalPedido(sc);
@@ -45,7 +46,7 @@ public class Main {
     }
 
 
-
+/*
     private static void criarReserva(Scanner sc) {
         System.out.print("Nome da reserva: ");
         String nome = sc.nextLine();
@@ -54,14 +55,14 @@ public class Main {
         int pessoas = sc.nextInt();
         sc.nextLine();
 
-        Reserva r = Reserva.criarReserva(LocalDateTime.now(), pessoas, nome, mesas);
+        Reserva r = Reserva.criarReserva(LocalDate.now(), pessoas, nome);
 
         if (r != null) {
             System.out.println("Reserva criada com sucesso!");
         } else {
             System.out.println("Nao foi possivel criar reserva.");
         }
-    }
+    }*/
 
 /*
     private static void criarPedido(Scanner sc) {

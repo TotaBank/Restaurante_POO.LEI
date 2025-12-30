@@ -3,16 +3,24 @@ package lei.grupo4.java;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+class CompararPorCapacidade implements Comparator<Mesa>{
+    @Override
+    public int compare(Mesa o1, Mesa o2) {
+        return o1.mCapacidade.compareTo(o2.mCapacidade);
+    }
+}
 public class Mesa {
     private static final String CAMINHO_MESAS_JSON = "src/main/java/lei/grupo4/resources/Mesas.json";
 
-    int mId;
-    int mCapacidade;
+    Integer mId;
+    Integer mCapacidade;
     EstadoMesa mEstado;
     public Mesa(
             int pId,
@@ -66,7 +74,8 @@ public class Mesa {
         } catch (Exception e) {
             System.out.println(e);
         }
-
+        Comparator<Mesa> comparador = new CompararPorCapacidade(); // no final, da sort pelo tamanho da mesa asc
+        listaDeMesas.sort(comparador);
         return listaDeMesas;
     }
     public static List<Mesa> obterPorCapacidade(int pNumPessoas){

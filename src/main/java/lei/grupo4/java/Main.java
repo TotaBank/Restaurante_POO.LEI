@@ -88,7 +88,7 @@ public class Main {
         // Nome da reserva
         System.out.print("Nome da reserva: ");
         String mNome = sc.nextLine();
-
+/*
         Reserva mReserva = Reserva.criarReserva(
                 mData,
                 mRefeicao,
@@ -100,7 +100,7 @@ public class Main {
             System.out.println("Reserva criada com sucesso!");
         } else {
             System.out.println("Nao foi possivel criar a reserva.");
-        }
+        }*/
     }
 
 

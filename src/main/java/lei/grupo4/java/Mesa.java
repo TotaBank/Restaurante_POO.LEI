@@ -1,14 +1,6 @@
 package lei.grupo4.java;
 
-import java.io.File;
-import java.io.IOException;
-import java.sql.Array;
-import java.sql.Ref;
-import java.time.LocalDate;
 import java.util.*;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 
 class CompararPorCapacidade implements Comparator<Mesa>{
@@ -18,22 +10,28 @@ class CompararPorCapacidade implements Comparator<Mesa>{
     }
 }
 public class Mesa {
-    private Integer mQuantMesas = 0;
+    private static Integer mQuantMesas = 0;
     Integer mId;
     Integer mCapacidade;
     EstadoMesa mEstado;
+    Pedido mPedidoAtual;
     public Mesa(
             int pCapacidade
     ){
-        mQuantMesas +=1;
+        Mesa.mQuantMesas += 1;
         this.mId = mQuantMesas;
         this.mCapacidade = pCapacidade;
         this.mEstado = EstadoMesa.LIVRE;
+        this.mPedidoAtual = null;
     }
-    public String toString(){
+    public String mostrarDetalhes(){
         String ret ="";
-        ret+=String.format("Mesa: %d\nCapacidade: %d", this.mId, this.mCapacidade);
+        ret+=String.format("Mesa: %d\tCapacidade: %d\tEstado: %s\tPedido Atual:", this.mId, this.mCapacidade, this.mEstado, this.mPedidoAtual);
         return ret;
+    }
+    @Override
+    public String toString(){
+        return String.format("%d", this.mId);
     }
 
     public int obterId(){
@@ -47,10 +45,31 @@ public class Mesa {
     public EstadoMesa obterEstado(){
         return this.mEstado;
     }
+
     public boolean livre(){
         return this.mEstado == EstadoMesa.LIVRE;
     }
 
+    public Pedido obterPedidoAtual(){
+        return this.mPedidoAtual;
+    }
+
+    public void reservar(){
+        if(!(this.mEstado == EstadoMesa.LIVRE)){
+            System.out.println(String.format("A mesa %d não está livre.", this.mId));
+        }
+        this.mEstado = EstadoMesa.RESERVADA;
+    }
+
+    public void fecharPedido(){
+        this.mEstado = EstadoMesa.LIVRE;
+        this.mPedidoAtual = null;
+    }
+
+    public void abrirPedido(Pedido pPedido){
+        this.mEstado = EstadoMesa.OCUPADA;
+        this.mPedidoAtual = pPedido;
+    }
 
 
 

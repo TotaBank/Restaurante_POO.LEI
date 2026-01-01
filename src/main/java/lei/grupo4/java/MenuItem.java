@@ -1,148 +1,49 @@
 package lei.grupo4.java;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Scanner;
 
-import org.json.JSONObject;
-import org.json.JSONTokener;
-
-import static lei.grupo4.java.Stock.obterStock;
 
 public class MenuItem {
 
-    private static final String CAMINHO_MENU_JSON ="src/main/java/lei/grupo4/resources/Menu.json";
-
-    int mId;
-    String mNome;
-    float mPreco;
-    boolean mDisponivel;
-    Map<Stock, Integer> mIngredientes;
+    private static int mQuantMenuItem = 0;
+    private int mId;
+    private String mNome;
+    private float mPreco;
+    private boolean mDisponivel;
+    private Map<Stock, Integer> mIngredientes;
 
     public MenuItem(
-            int pId,
             String pNome,
             float pPreco,
             boolean pDisponivel,
             Map<Stock, Integer> pIngredientes
     ){
-        this.mId = pId;
+        MenuItem.mQuantMenuItem += 1;
+        this.mId = MenuItem.mQuantMenuItem;
         this.mNome = pNome;
         this.mPreco = pPreco;
         this.mDisponivel = pDisponivel;
         this.mIngredientes = pIngredientes;
     }
+    public String mostrarDetalhes(){
+        String ret = "";
+        ret += String.format("Nome: %s\t Preco: %.2f\tIngredientes: %s\tDisponivel: %s", this.mNome, this.mPreco, this.mIngredientes, this.mDisponivel);
+        return ret;
+    }
+
+    @Override
+    public String toString(){
+        return this.mNome;
+    }
 
     public float obterPreco(){ return this.mPreco; }
-
-    // Verifica se há stock suficiente para preparar o prato
-    public static boolean podeSerPreparado(int idPrato) {
-
-        Map<Integer, Stock.Ingrediente> stock = obterStock();
-        Map<Integer, Integer> ingredientesNecessarios = obterIngredientesDoPrato(idPrato);
-
-        for (Integer idIngrediente : ingredientesNecessarios.keySet()) {
-
-            // ingrediente não existe no stock
-            if (!stock.containsKey(idIngrediente)) {
-                return false;
-            }
-
-            int quantidadeNecessaria = ingredientesNecessarios.get(idIngrediente);
-            int quantidadeEmStock = stock.get(idIngrediente).getQuantidade();
-
-            // quantidade insuficiente
-            if (quantidadeEmStock < quantidadeNecessaria) {
-                return false;
-            }
-        }
-
-        // se passou todas as verificações
-        return true;
+    public String obterNome(){return this.mNome;}
+    public Map<Stock, Integer> obterIngredientes() {
+        return this.mIngredientes;
     }
 
-    public static Map<Integer, Integer> obterIngredientesDoPrato(int idPrato) {
-        Map<Integer, Integer> ingredientes = new HashMap<>();
-        File ficheiro = new File(CAMINHO_MENU_JSON);
-        String dados = "";
-
-        try (Scanner sc = new Scanner(ficheiro)) {
-            while (sc.hasNextLine()) {
-                dados += sc.nextLine();
-            }
-
-            JSONObject menu = new JSONObject(dados);
-            JSONObject prato = menu.getJSONObject(String.valueOf(idPrato));
-            JSONObject ingrNecessarios = prato.getJSONObject("ingredientesNecessarios");
-
-            for (String key : ingrNecessarios.keySet()) {
-                ingredientes.put(
-                        Integer.parseInt(key),
-                        ingrNecessarios.getInt(key)
-                );
-            }
-
-        } catch (IOException e) {
-            System.err.println("Erro ao ler o ficheiro Menu.json");
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-        return ingredientes;
+    public boolean disponivel(){
+        return this.mDisponivel;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // Remove os ingredientes usados do stock.json
-    public void consumirStock() {
-        try {
-            String mCaminhoMenu = "src/main/java/lei/grupo4/resources/Menu.json";
-            String mCaminhoStock = "src/main/java/lei/grupo4/resources/Stock.json";
-
-            JSONObject mMenuJson = new JSONObject(new JSONTokener(new FileReader(mCaminhoMenu)));
-            JSONObject mStockJson = new JSONObject(new JSONTokener(new FileReader(mCaminhoStock)));
-
-            JSONObject mItemMenu = mMenuJson.getJSONObject(String.valueOf(mId));
-            JSONObject mIngredientes = mItemMenu.getJSONObject("ingredientesNecessarios");
-
-            Iterator<String> mIdsIngredientes = mIngredientes.keys();
-            while (mIdsIngredientes.hasNext()) {
-                String mIdIngrediente = mIdsIngredientes.next();
-                int mQtdNecessaria = mIngredientes.getInt(mIdIngrediente);
-
-                JSONObject mStockItem = mStockJson.getJSONObject(mIdIngrediente);
-                int mQtdDisponivel = mStockItem.getInt("quantidade");
-
-                mStockItem.put("quantidade", mQtdDisponivel - mQtdNecessaria);
-            }
-
-            // Grava o stock atualizado
-            FileWriter mWriter = new FileWriter(mCaminhoStock);
-            mWriter.write(mStockJson.toString(4));
-            mWriter.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }

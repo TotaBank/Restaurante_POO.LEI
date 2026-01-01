@@ -10,6 +10,12 @@ public class Sala {
         this.mNome = pNome;
         this.mMesas = new ArrayList<>();
     }
+    @Override
+    public String toString(){
+        String ret = "";
+        ret += String.format("%s\tMesas: %s", this.mNome, this.mMesas);
+        return ret;
+    }
 
     public void adicionarMesa(Mesa pMesa){
         this.mMesas.add(pMesa);

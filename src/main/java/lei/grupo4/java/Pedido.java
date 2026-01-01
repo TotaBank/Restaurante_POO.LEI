@@ -11,11 +11,9 @@ public class Pedido {
     EstadoPedido mEstado;
     LocalDateTime mHoraCriacao;
     Mesa mMesa;
-    Utilizador empregadoMesa;
 
     public Pedido(
-            Mesa pMesa,
-            Utilizador pEmpregadoMesa
+            Mesa pMesa
     ){
         this.mListaItems = new ArrayList<PedidoItem>();
         Pedido.mNumPedidos =+ 1;
@@ -23,7 +21,6 @@ public class Pedido {
         this.mEstado = EstadoPedido.REGISTADO;
         this.mHoraCriacao = LocalDateTime.now();
         this.mMesa = pMesa;
-        this.empregadoMesa = pEmpregadoMesa;
     }
 
     public void adicionarItem(PedidoItem pItem){
@@ -34,13 +31,33 @@ public class Pedido {
     }
 
     public void confirmar(){
-
     }
-    public void atualizarEstado(){
-
+    public void atualizarEstado(EstadoPedido pEstado){
+        this.mEstado = pEstado;
     }
-    public void calcularTotal(){
+    public Float calcularTotal(){
+        float retTotal = 0.0F;
+        for(PedidoItem item : this.mListaItems){
+            float precoItem = item.mMenuItem.obterPreco();
+            retTotal += precoItem;
+        }
+        return retTotal;
+    }
 
+    public void iniciarPreparacao(){
+        switch(this.mEstado){
+            case EstadoPedido.EM_PREPARACAO:{
+                String texto = String.format("O pedido está %s", EstadoPedido.EM_PREPARACAO);
+                System.out.println(texto);
+            }
+            case EstadoPedido.PRONTO:
+        }
+    }
+    public void servir(){
+        if (this.mEstado == EstadoPedido.EM_PREPARACAO){
+            System.out.println("O pedido ainda está a ser preparado");
+        }
+        this.mEstado = EstadoPedido.SERVIDO;
     }
 
 

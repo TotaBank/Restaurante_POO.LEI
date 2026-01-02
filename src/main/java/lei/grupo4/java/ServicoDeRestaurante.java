@@ -45,7 +45,7 @@ public class ServicoDeRestaurante {
         boolean reservado = false;
         Mesa mesaSelecionada = null;
         for(Reserva reserva : this.mReservas){
-            if(reserva.obterNomeReserva() == pNome && reserva.obterNumeroPessoas() >=pNumeroPessoas){
+            if(reserva.obterNomeReserva().equals(pNome) && reserva.obterNumeroPessoas() >=pNumeroPessoas){
                 reservado = true;
                 mesaSelecionada = reserva.obterMesa();
             }

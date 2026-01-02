@@ -14,7 +14,7 @@ public class Pedido {
     private Pedido(
             Mesa pMesa
     ){
-        Pedido.mNumPedidos =+ 1;
+        Pedido.mNumPedidos += 1;
         this.mId = Pedido.mNumPedidos;
         this.mEstado = EstadoPedido.REGISTADO;
         this.mMesa = pMesa;

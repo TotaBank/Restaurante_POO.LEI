@@ -1,10 +1,13 @@
 package lei.grupo4.java;
 
-import java.sql.Array;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ServicoDeRestaurante {
+    private final static String mCaminhoFatura = "src/main/java/lei/grupo4/resources/Faturas.json";
     private List<Sala> mSalas;
     private List<MenuItem> mMenu;
     private List<StockItem> mStock;
@@ -89,7 +92,10 @@ public class ServicoDeRestaurante {
             throw new IllegalStateException(String.format("Não é possível preparar o item %s", pItemPedido));
         }
     }
-    public void servirPedido(Pedido pPedido){pPedido.servir();}
+    public void servirPedido(Pedido pPedido){
+        pPedido.servir();
+    }
+
     public PedidoItem criarItemDePedido(MenuItem pItemMenu, String pObservacoes){
         PedidoItem novoPedido = new PedidoItem(pItemMenu, pObservacoes);
         return novoPedido;
@@ -117,6 +123,21 @@ public class ServicoDeRestaurante {
         }
         throw new IllegalStateException("Não há mesas livres");
 
+    }
+    public void imprimirFatura(Fatura pFatura){
+        String dados = Utilitarios.carregarOuInicializarFicheiroJSON("src/main/java/lei/grupo4/resources/Faturas.json", FicheiroJSON.OBJECT);
+        JSONObject root = new JSONObject(dados);
+        JSONArray itemsServidos = new JSONArray();
+        for(PedidoItem itemServido : pFatura.obterPedido().obterListaItemsServidos()){
+            itemsServidos.put(itemServido);
+        }
+        JSONObject fatura = new JSONObject();
+        fatura.put("Pedido", pFatura.obterPedido().obterId());
+        fatura.put("Preco", pFatura.obterPreco());
+        fatura.put("Items", itemsServidos);
+        root.put(pFatura.obterId().toString(), fatura);
+
+        Utilitarios.escreverJsonEmFicheiro(root, mCaminhoFatura);
     }
 
     public List<Reserva> obterReservas(){return this.mReservas;}

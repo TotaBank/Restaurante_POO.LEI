@@ -16,6 +16,9 @@ public class Fatura {
         this.mId = mQuantasFaturas;
         this.mValor = pPedido.calcularTotal();
     }
+    public Pedido obterPedido(){return this.mPedido;}
+    public float obterPreco(){return this.mValor;}
+    public Integer obterId(){return this.mId;}
     @Override
     public String toString(){
         StringBuilder ret = new StringBuilder();

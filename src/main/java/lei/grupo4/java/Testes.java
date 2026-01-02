@@ -54,15 +54,21 @@ public class Testes {
         PedidoItem hamburgerQueijoBemPassado = sr.criarItemDePedido(hamburgerDeQuejo, "bem passado");
         hamburgerQueijoBemPassado.adicionarIngredientes(queijo, 1);
         sr.adicionarItemAPedido(ultimoPedido, hamburgerQueijoBemPassado);
+        System.out.println("*".repeat(30));
         System.out.println(ultimoPedido);
+        System.out.println(queijo.mostrarDetalhes());
         sr.servirPedido(ultimoPedido);
+        System.out.println("*".repeat(30));
         System.out.println(ultimoPedido);
+        System.out.println(hamburger.mostrarDetalhes());
+        System.out.println(queijo.mostrarDetalhes());
         sr.adicionarItemAPedido(ultimoPedido, sr.criarItemDePedido(garrafaDeAgua, "Fria") );
         System.out.println(ultimoPedido);
         sr.servirPedido(ultimoPedido);
         System.out.println(ultimoPedido);
         System.out.println("*".repeat(30));
         System.out.println(sr.fecharMesa(mesa1));
+        sr.imprimirFatura(sr.obterTodasAsFaturas().getLast());
 
 
 

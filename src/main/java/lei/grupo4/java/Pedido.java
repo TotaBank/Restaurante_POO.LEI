@@ -2,6 +2,7 @@ package lei.grupo4.java;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Pedido {
     static Integer mNumPedidos = 0;
@@ -52,6 +53,12 @@ public class Pedido {
             this.mEstado = EstadoPedido.SERVIDO;
             for(PedidoItem itemPedido : this.mListaItemsRegistados){
                 this.mListaItemsServidos.add(itemPedido);
+                for(Map.Entry<StockItem, Integer> itemQuantidade: itemPedido.obterIngredientesFinais().entrySet()){
+                    StockItem item = itemQuantidade.getKey();
+                    int quantidade = itemQuantidade.getValue();
+                    item.remover(quantidade);
+                }
+
             }
             this.mListaItemsRegistados.clear();
         } else{

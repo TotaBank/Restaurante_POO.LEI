@@ -24,6 +24,7 @@ public class StockItem {
 
     public void remover(int pQuantidade){
         this.mQuantidade -= pQuantidade;
+        libertarReserva(pQuantidade);
     }
 
     public void reservar(int pQuantidade){

@@ -49,6 +49,8 @@ public class Mesa {
     public boolean livre(){
         return this.mEstado == EstadoMesa.LIVRE;
     }
+    public boolean ocupada(){return this.mEstado == EstadoMesa.OCUPADA;}
+    public boolean reservada(){return this.mEstado == EstadoMesa.RESERVADA;}
 
     public Pedido obterPedidoAtual(){
         return this.mPedidoAtual;

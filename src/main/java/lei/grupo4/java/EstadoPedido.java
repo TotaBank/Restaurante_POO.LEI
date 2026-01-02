@@ -2,9 +2,8 @@ package lei.grupo4.java;
 
 public enum EstadoPedido {
     REGISTADO("REGISTADO"),
-    EM_PREPARACAO("EM PREPARAÇÃO"),
-    PRONTO("PRONTO"),
-    SERVIDO("SERVIDO");
+    SERVIDO("SERVIDO"),
+    PAGO("PAGO");
 
     String mEstado;
     EstadoPedido(String estado) {

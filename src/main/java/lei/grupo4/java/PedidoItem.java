@@ -5,7 +5,7 @@ import java.util.Map;
 public class PedidoItem {
     MenuItem mMenuItem;
     String mObservacoes;
-    Map<Stock, Integer> mIngredientes;
+    Map<StockItem, Integer> mIngredientes;
     public PedidoItem(
             MenuItem pMenuItem,
             String pObservacoes
@@ -26,32 +26,38 @@ public class PedidoItem {
         return this.mMenuItem.obterNome();
     }
 
-    public Map<Stock, Integer> obterIngredientesItemMenu(){
+    public Map<StockItem, Integer> obterIngredientesItemMenu(){
         return this.mMenuItem.obterIngredientes();
     }
 
-    public void removerIngrediente(Stock pStock, int pQuantidade){
-        if(this.mIngredientes.containsKey(pStock)){
-            int qtdAtual = this.mIngredientes.get(pStock);
+    public void removerIngrediente(StockItem pStockItem, int pQuantidade){
+        if(this.mIngredientes.containsKey(pStockItem)){
+            int qtdAtual = this.mIngredientes.get(pStockItem);
             int novaQtd = qtdAtual - pQuantidade;
             if (novaQtd < 0){
                 novaQtd = 0;
             }
-            this.mIngredientes.put(pStock, novaQtd);
+            this.mIngredientes.put(pStockItem, novaQtd);
         }
     }
-    public void adicionarIngredientes(Stock pStock, int pQuantidade){
-        if(this.mIngredientes.containsKey(pStock)){
-            int qtdAtual = this.mIngredientes.get(pStock);
+    public void removerIngrediente(StockItem pStockItem){
+        if(this.mIngredientes.containsKey(pStockItem)){
+            int novaQtd = 0;
+            this.mIngredientes.put(pStockItem, novaQtd);
+        }
+    }
+    public void adicionarIngredientes(StockItem pStockItem, int pQuantidade){
+        if(this.mIngredientes.containsKey(pStockItem)){
+            int qtdAtual = this.mIngredientes.get(pStockItem);
             int novaQtd = qtdAtual + pQuantidade;
             if (novaQtd < 0){
                 novaQtd = 0;
             }
-            this.mIngredientes.put(pStock, novaQtd);
+            this.mIngredientes.put(pStockItem, novaQtd);
         }
     }
 
-    public Map<Stock, Integer> obterIngredientesFinais(){
+    public Map<StockItem, Integer> obterIngredientesFinais(){
         return this.mIngredientes;
     }
 

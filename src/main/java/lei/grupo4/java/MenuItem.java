@@ -10,13 +10,13 @@ public class MenuItem {
     private String mNome;
     private float mPreco;
     private boolean mDisponivel;
-    private Map<Stock, Integer> mIngredientes;
+    private Map<StockItem, Integer> mIngredientes;
 
     public MenuItem(
             String pNome,
             float pPreco,
             boolean pDisponivel,
-            Map<Stock, Integer> pIngredientes
+            Map<StockItem, Integer> pIngredientes
     ){
         MenuItem.mQuantMenuItem += 1;
         this.mId = MenuItem.mQuantMenuItem;
@@ -38,7 +38,7 @@ public class MenuItem {
 
     public float obterPreco(){ return this.mPreco; }
     public String obterNome(){return this.mNome;}
-    public Map<Stock, Integer> obterIngredientes() {
+    public Map<StockItem, Integer> obterIngredientes() {
         return this.mIngredientes;
     }
 

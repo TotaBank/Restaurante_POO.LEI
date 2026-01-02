@@ -2,6 +2,7 @@ package lei.grupo4.java;
 
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 public class Reserva {
@@ -19,7 +20,9 @@ public class Reserva {
         this.mMesa = pMesa;
     }
 
-
+    public String obterNomeReserva(){return this.mNomeReserva;}
+    public Mesa obterMesa(){return this.mMesa;}
+    public int obterNumeroPessoas(){return this.mNumPessoas;}
     @Override
     public String toString(){
         String ret = "";

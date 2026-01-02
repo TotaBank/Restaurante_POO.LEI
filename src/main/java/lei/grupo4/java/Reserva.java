@@ -12,6 +12,7 @@ public class Reserva {
     private String mNomeReserva;
     private Mesa mMesa;
 
+
     public Reserva(int pNumPessoas, String pNomeReserva, Mesa pMesa) {
         Reserva.mQuantasReservas +=1;
         this.mId = mQuantasReservas;

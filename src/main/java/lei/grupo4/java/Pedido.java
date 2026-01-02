@@ -1,13 +1,13 @@
 package lei.grupo4.java;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Pedido {
-    static Integer mNumPedidos;
+    static Integer mNumPedidos = 0;
     Integer mId;
-    List<PedidoItem> mListaItems;
+    List<PedidoItem> mListaItemsRegistados;
+    List<PedidoItem> mListaItemsServidos;
     EstadoPedido mEstado;
     Mesa mMesa;
 
@@ -18,41 +18,52 @@ public class Pedido {
         this.mId = Pedido.mNumPedidos;
         this.mEstado = EstadoPedido.REGISTADO;
         this.mMesa = pMesa;
-        this.mListaItems = new ArrayList<PedidoItem>();
+        this.mListaItemsRegistados = new ArrayList<PedidoItem>();
+        this.mListaItemsServidos = new ArrayList<PedidoItem>();
+
     }
     @Override
     public String toString(){
         String ret ="";
-        ret+=String.format("Id: %d\tEstado: %s\tMesa: %s\nLista de items: %s", this.mId, this.mEstado, this.mMesa, this.mListaItems);
+        ret+=String.format("Id: %d\tEstado: %s\tMesa: %s\nItems registados: %s\nItems servidos: %s", this.mId, this.mEstado, this.mMesa, this.mListaItemsRegistados, this.mListaItemsServidos);
         return ret;
     }
     public EstadoPedido obterEstado(){return this.mEstado;}
     public Mesa obterMesa(){return this.mMesa;}
     public int obterId(){return this.mId;}
+    public List<PedidoItem> obterListaItemsRegistados(){return this.mListaItemsRegistados;}
+    public List<PedidoItem> obterListaItemsServidos(){return this.mListaItemsServidos;}
+
     public void adicionarItem(PedidoItem pItem){
         this.mEstado = EstadoPedido.REGISTADO;
-        this.mListaItems.add(pItem);
+        this.mListaItemsRegistados.add(pItem);
     }
 
     public void removerItem(PedidoItem pItem){
-        this.mListaItems.remove(pItem);
+        this.mListaItemsRegistados.remove(pItem);
     }
 
     public void atualizarEstado(EstadoPedido pEstado){
         this.mEstado = pEstado;
     }
+
     public void servir(){
         if (this.mEstado == EstadoPedido.REGISTADO){
             this.mEstado = EstadoPedido.SERVIDO;
+            for(PedidoItem itemPedido : this.mListaItemsRegistados){
+                this.mListaItemsServidos.add(itemPedido);
+            }
+            this.mListaItemsRegistados.clear();
+        } else{
+            throw new IllegalStateException("Pedido não está registado/já foi servido");
         }
-        System.out.println("Pedido não está registado/já foi servido");
 
     }
 
     public Float calcularTotal(){
         float retTotal = 0.0F;
-        for(PedidoItem item : this.mListaItems){
-            float precoItem = item.mMenuItem.obterPreco();
+        for(PedidoItem item : this.mListaItemsServidos){
+            float precoItem = item.obterPreco();
             retTotal += precoItem;
         }
         return retTotal;

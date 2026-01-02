@@ -18,8 +18,12 @@ public class Fatura {
     }
     @Override
     public String toString(){
-        String ret = "";
-        ret += String.format("Fatura: %d\tPedido: %d\tValor: %.2f", this.mId, this.mPedido.obterId(), this.mValor);
-        return ret;
+        StringBuilder ret = new StringBuilder();
+        ret.append(String.format("Fatura: %d\tPedido: %d\tValor: %.2f\n", this.mId, this.mPedido.obterId(), this.mValor));
+        for(PedidoItem itemAtual : this.mPedido.mListaItemsServidos){
+            ret.append(String.format("%s - %.2f€\n", itemAtual, itemAtual.obterPreco()));
+        }
+
+        return ret.toString();
     }
 }

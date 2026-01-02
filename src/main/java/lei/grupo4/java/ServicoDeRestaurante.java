@@ -23,7 +23,7 @@ public class ServicoDeRestaurante {
         this.mReservas = new ArrayList<>();
         this.mFaturas = new ArrayList<>();
     }
-    public List<Fatura> obterFaturas(){return this.mFaturas;}
+    public List<Fatura> obterTodasAsFaturas(){return this.mFaturas;}
 
 
     public Reserva criarReserva(String pNome, int pNumeroPessoas){
@@ -41,36 +41,71 @@ public class ServicoDeRestaurante {
 
     }
 
-    public Pedido criarPedido(String pNome, int pNumeroPessoas){
-        boolean reservado = false;
-        Mesa mesaSelecionada = null;
-        for(Reserva reserva : this.mReservas){
-            if(reserva.obterNomeReserva().equals(pNome) && reserva.obterNumeroPessoas() >=pNumeroPessoas){
-                reservado = true;
-                mesaSelecionada = reserva.obterMesa();
-            }
+    public void removerReserva(Reserva pReserva){
+        if(this.mReservas.contains(pReserva)){
+            this.mReservas.remove(pReserva);
+        } else {
+            throw new IllegalStateException("Reserva não existe para poder ser removida.");
         }
-        if (!(reservado)) {
-            for (Sala sala : mSalas) {
-                for (Mesa mesa : sala.obterMesas()) {
-                    if (mesa.livre() && mesa.obterCapacidade() >= pNumeroPessoas) {
-                        mesaSelecionada = mesa;
-                    }
+    }
+
+    public Pedido criarPedido(String pNome, int pNumeroPessoas) {
+        for (Sala salaAtual : this.mSalas) {
+            Mesa mesaCapaz = salaAtual.procurarMesaLivre(pNumeroPessoas);
+            if (mesaCapaz != null) {
+                if (mesaCapaz.obterCapacidade() >= pNumeroPessoas && mesaCapaz.livre()) {
+                    Pedido novoPedido = Pedido.criarPedido(mesaCapaz);
+                    this.mPedidos.add(novoPedido);
+                    mesaCapaz.abrirPedido(novoPedido);
+                    return novoPedido;
+
                 }
             }
         }
-        if (mesaSelecionada != null){
-            Pedido novoPedido = Pedido.criarPedido(mesaSelecionada);
-            this.mPedidos.add(novoPedido);
-            mesaSelecionada.abrirPedido(novoPedido);
-            return novoPedido;
+        throw new IllegalStateException("Não há mesas livres");
+    }
+
+    public Pedido criarPedido(Reserva pReserva){
+        if (this.mReservas.contains(pReserva)){
+            String nomeReserva = pReserva.obterNomeReserva();
+            int quantasPessoas = pReserva.obterNumeroPessoas();
+            Mesa mesaReservada = pReserva.obterMesa();
+                    Pedido novoPedido = Pedido.criarPedido(mesaReservada);
+                    this.mPedidos.add(novoPedido);
+                    mesaReservada.abrirPedido(novoPedido);
+                    this.mReservas.remove(pReserva); //ou eventualmente podemos colocar num ficheiro json de registo
+                     return novoPedido;
+
         }
 
         throw new IllegalStateException("Não há mesas livres");
-
     }
 
-    public Fatura fecharPedido(Mesa pMesa){
+    public void adicionarItemAPedido(Pedido pPedido, PedidoItem pItemPedido){
+        if (pItemPedido.possivelPreparar()){
+            pItemPedido.reservarIngredientes();
+            pPedido.adicionarItem(pItemPedido);
+        }else{
+            throw new IllegalStateException(String.format("Não é possível preparar o item %s", pItemPedido));
+        }
+    }
+    public void servirPedido(Pedido pPedido){pPedido.servir();}
+    public PedidoItem criarItemDePedido(MenuItem pItemMenu, String pObservacoes){
+        PedidoItem novoPedido = new PedidoItem(pItemMenu, pObservacoes);
+        return novoPedido;
+    }
+
+
+    public void removerItemAPedido(Pedido pPedido, PedidoItem pItemPedido){
+        if(pPedido.obterListaItemsRegistados().contains(pItemPedido)){
+            pPedido.removerItem(pItemPedido);
+            pItemPedido.libertarIngredientes();
+        } else {
+            throw new IllegalStateException("O item não existe no pedido.");
+        }
+    }
+
+    public Fatura fecharMesa(Mesa pMesa){
         if(pMesa.ocupada()){
             Pedido pedidoAtual = pMesa.obterPedidoAtual();
             boolean foiPago = pedidoAtual.pagar();
@@ -84,9 +119,7 @@ public class ServicoDeRestaurante {
 
     }
 
-    public List<Reserva> obterReservas(){
-        return this.mReservas;
-    }
+    public List<Reserva> obterReservas(){return this.mReservas;}
     public List<Pedido> obterPedidos(){return this.mPedidos;}
 
 

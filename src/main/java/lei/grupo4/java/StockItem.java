@@ -6,6 +6,7 @@ public class StockItem {
     private String mNome;
     private int mQuantidade;
     private int mStockMinimo;
+    private int mQuantidadeReservada;
 
     public StockItem(String pNome, int pQuantidade, int pStockMinimo) {
         StockItem.mQuantItemStock +=1;
@@ -15,6 +16,7 @@ public class StockItem {
         this.mStockMinimo = pStockMinimo;
     }
 
+    public int obterQuantidade(){return this.mQuantidade;}
 
     public void repor(int pQuantidade) {
         this.mQuantidade += pQuantidade;
@@ -24,6 +26,12 @@ public class StockItem {
         this.mQuantidade -= pQuantidade;
     }
 
+    public void reservar(int pQuantidade){
+        this.mQuantidadeReservada += pQuantidade;
+    }
+    public void libertarReserva(int pQuantidade){
+        this.mQuantidadeReservada -= pQuantidade;
+    }
 
     // Verifica ingredientes abaixo ou no stock mínimo
     public boolean abaixoDoMinimo() {

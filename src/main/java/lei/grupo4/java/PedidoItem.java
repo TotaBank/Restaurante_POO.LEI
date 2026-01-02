@@ -3,9 +3,9 @@ package lei.grupo4.java;
 import java.util.Map;
 
 public class PedidoItem {
-    MenuItem mMenuItem;
-    String mObservacoes;
-    Map<StockItem, Integer> mIngredientes;
+    private MenuItem mMenuItem;
+    private String mObservacoes;
+    private Map<StockItem, Integer> mIngredientes;
     public PedidoItem(
             MenuItem pMenuItem,
             String pObservacoes
@@ -25,6 +25,7 @@ public class PedidoItem {
     public String toString(){
         return this.mMenuItem.obterNome();
     }
+    public float obterPreco(){return this.mMenuItem.obterPreco();}
 
     public Map<StockItem, Integer> obterIngredientesItemMenu(){
         return this.mMenuItem.obterIngredientes();
@@ -61,6 +62,32 @@ public class PedidoItem {
         return this.mIngredientes;
     }
 
+    public boolean possivelPreparar(){
+        for(Map.Entry<StockItem, Integer> entry : this.mIngredientes.entrySet()){
+            StockItem itemAtual = entry.getKey();
+            int quantidade = entry.getValue();
+            if(itemAtual.obterQuantidade() <= quantidade){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void reservarIngredientes(){
+        for(Map.Entry<StockItem, Integer> entry : this.mIngredientes.entrySet()){
+            StockItem itemAtual = entry.getKey();
+            int quantidade = entry.getValue();
+            itemAtual.reservar(quantidade);
+        }
+    }
+
+    public void libertarIngredientes(){
+        for(Map.Entry<StockItem, Integer> entry : this.mIngredientes.entrySet()){
+            StockItem itemAtual = entry.getKey();
+            int quantidade = entry.getValue();
+            itemAtual.libertarReserva(quantidade);
+        }
+    }
 
 
 

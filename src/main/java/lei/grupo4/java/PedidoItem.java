@@ -89,6 +89,8 @@ public class PedidoItem {
         }
     }
 
+    public boolean disponivel(){return this.mMenuItem.disponivel();}
+
 
 
 }

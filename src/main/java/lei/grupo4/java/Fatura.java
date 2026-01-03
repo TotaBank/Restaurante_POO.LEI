@@ -5,11 +5,13 @@ public class Fatura {
     private int mId;
     private float mValor;
     private Pedido mPedido;
+    private MetodoDePagamento mMetodoDePagamento;
     public Fatura(Pedido pPedido){
         this.mPedido = pPedido;
         Fatura.mQuantasFaturas +=1;
         this.mId = mQuantasFaturas;
         this.mValor = pPedido.calcularTotal();
+        this.mMetodoDePagamento = null;
     }
     public Pedido obterPedido(){return this.mPedido;}
     public float obterPreco(){return this.mValor;}
@@ -24,4 +26,8 @@ public class Fatura {
 
         return ret.toString();
     }
+    public void adicionarMetodoDePagamento(MetodoDePagamento pMetododDePagamento){
+        this.mMetodoDePagamento = pMetododDePagamento;
+    };
+    public MetodoDePagamento obterMetodoDePagamento(){return this.mMetodoDePagamento;}
 }

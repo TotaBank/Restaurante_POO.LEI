@@ -88,7 +88,7 @@ public class ServicoDeRestaurante {
     }
 
     public void adicionarItemAPedido(Pedido pPedido, PedidoItem pItemPedido){
-        if (pItemPedido.possivelPreparar()){
+        if (pItemPedido.possivelPreparar() && pItemPedido.disponivel()){
             pItemPedido.reservarIngredientes();
             pPedido.adicionarItem(pItemPedido);
         }else{
@@ -120,6 +120,7 @@ public class ServicoDeRestaurante {
             boolean foiPago = pedidoAtual.pagar(pMetodoDePagamento);
             if(foiPago){
                 Fatura novaFatura = new Fatura(pedidoAtual);
+                novaFatura.adicionarMetodoDePagamento(pMetodoDePagamento.obterMetodoDePagamento());
                 this.mFaturas.add(novaFatura);
                 return novaFatura;
 
@@ -143,6 +144,7 @@ public class ServicoDeRestaurante {
         fatura.put("Pedido", pFatura.obterPedido().obterId());
         fatura.put("Preco", pFatura.obterPreco());
         fatura.put("Items", itemsServidos);
+        fatura.put("Método de Pagamento", pFatura.obterMetodoDePagamento());
         root.put(pFatura.obterId().toString(), fatura);
 
         Utilitarios.escreverJsonEmFicheiro(root, mCaminhoFatura);

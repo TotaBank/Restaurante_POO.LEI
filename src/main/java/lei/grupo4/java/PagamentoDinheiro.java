@@ -7,6 +7,7 @@ public class PagamentoDinheiro extends Pagamento{
     public PagamentoDinheiro(float pValor, float pValorRecebido){
         super(pValor);
         this.mValorRecebido = pValorRecebido;
+        this.mMetodoDePagamento = MetodoDePagamento.DINHEIRO;
     }
     @Override
     public BoolAndFloat pagar() {
@@ -19,4 +20,5 @@ public class PagamentoDinheiro extends Pagamento{
     public float calcularTroco(){
         return  this.mValorRecebido-this.mValor;
     }
+
 }

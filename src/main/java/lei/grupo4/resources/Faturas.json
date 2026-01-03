@@ -4,5 +4,6 @@
     "Items": [
         {"Hamburger de Queijo": 10},
         {"Garrafa de Água": 2}
-    ]
+    ],
+    "Método de Pagamento": "DINHEIRO"
 }}

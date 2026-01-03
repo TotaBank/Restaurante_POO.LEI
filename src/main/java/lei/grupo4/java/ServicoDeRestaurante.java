@@ -26,7 +26,9 @@ public class ServicoDeRestaurante {
         this.mReservas = new ArrayList<>();
         this.mFaturas = new ArrayList<>();
     }
-    public List<Fatura> obterTodasAsFaturas(){return this.mFaturas;}
+    public List<Fatura> obterTodasAsFaturas(){
+        return this.mFaturas;
+    }
 
 
     public Reserva criarReserva(String pNome, int pNumeroPessoas){
@@ -112,10 +114,10 @@ public class ServicoDeRestaurante {
         }
     }
 
-    public Fatura fecharMesa(Mesa pMesa){
+    public Fatura fecharMesa(Mesa pMesa, Pagamento pMetodoDePagamento){
         if(pMesa.ocupada()){
             Pedido pedidoAtual = pMesa.obterPedidoAtual();
-            boolean foiPago = pedidoAtual.pagar();
+            boolean foiPago = pedidoAtual.pagar(pMetodoDePagamento);
             if(foiPago){
                 Fatura novaFatura = new Fatura(pedidoAtual);
                 this.mFaturas.add(novaFatura);
@@ -128,11 +130,14 @@ public class ServicoDeRestaurante {
 
     }
     public void imprimirFatura(Fatura pFatura){
+        if(pFatura != null){
         String dados = Utilitarios.carregarOuInicializarFicheiroJSON("src/main/java/lei/grupo4/resources/Faturas.json", FicheiroJSON.OBJECT);
         JSONObject root = new JSONObject(dados);
         JSONArray itemsServidos = new JSONArray();
         for(PedidoItem itemServido : pFatura.obterPedido().obterListaItemsServidos()){
-            itemsServidos.put(itemServido);
+            JSONObject itemEPreco = new JSONObject();
+            itemEPreco.put(itemServido.toString(), itemServido.obterPreco());
+            itemsServidos.put(itemEPreco);
         }
         JSONObject fatura = new JSONObject();
         fatura.put("Pedido", pFatura.obterPedido().obterId());
@@ -141,6 +146,9 @@ public class ServicoDeRestaurante {
         root.put(pFatura.obterId().toString(), fatura);
 
         Utilitarios.escreverJsonEmFicheiro(root, mCaminhoFatura);
+        }else{
+        System.out.println("Fatura inválida");
+        }
     }
 
     public List<Reserva> obterReservas(){return this.mReservas;}

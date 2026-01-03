@@ -81,14 +81,25 @@ public class Pedido {
         pMesa.abrirPedido(ret);
         return ret;
     }
-    public boolean pagar(){
+    public boolean pagar(Pagamento pPagamento){
         if (!(this.mEstado == EstadoPedido.SERVIDO)){
             System.out.println("O pedido ainda não foi servido");
             return false;
         }
-        this.mMesa.fecharPedido();
-        this.mEstado = EstadoPedido.PAGO;
-        return true;
+        BoolAndFloat pago = pPagamento.pagar();
+        boolean foiPago = pago.obterBool();
+        float troco = pago.obterFloat();
+        if (foiPago){
+            this.mMesa.fecharPedido();
+            this.mEstado = EstadoPedido.PAGO;
+            if (troco>0){
+                System.out.println(String.format("Foi dado %.2f de troco ao cliente", troco));
+            }
+            return true;
+        } else{
+            System.out.println(String.format("Não foi dada a quantia necessário, faltou %.2f para pagar o pedido.", troco));
+        }
+        return false;
     }
 
 

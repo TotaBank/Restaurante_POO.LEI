@@ -44,6 +44,7 @@ public class Testes {
         menu.add(hamburgerDeQuejo);
         ServicoDeRestaurante sr = new ServicoDeRestaurante(listaDeSalas, menu, stock);
 
+
         sr.criarReserva("Tomás", 4);
         Reserva ultimaReserva = sr.obterReservas().getLast();
         System.out.println(ultimaReserva);
@@ -67,8 +68,10 @@ public class Testes {
         sr.servirPedido(ultimoPedido);
         System.out.println(ultimoPedido);
         System.out.println("*".repeat(30));
-        System.out.println(sr.fecharMesa(mesa1));
-        sr.imprimirFatura(sr.obterTodasAsFaturas().getLast());
+        PagamentoDinheiro cartaoDoTomas = new PagamentoDinheiro(ultimoPedido.calcularTotal(), 14);
+
+        sr.imprimirFatura(sr.fecharMesa(mesa1, cartaoDoTomas));
+        System.out.println(mesa1.obterEstado());
 
 
 

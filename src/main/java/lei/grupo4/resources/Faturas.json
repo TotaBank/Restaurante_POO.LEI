@@ -2,7 +2,7 @@
     "Preco": 12,
     "Pedido": 1,
     "Items": [
-        "Hamburger de Queijo",
-        "Garrafa de Água"
+        {"Hamburger de Queijo": 10},
+        {"Garrafa de Água": 2}
     ]
 }}

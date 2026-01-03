@@ -40,15 +40,15 @@ public class ServicoDeRestaurante {
                 }
             }
         }
-        throw new IllegalStateException("Não há mesas livres");
-
+        System.out.println("Não existem mesas livres!");
+        return null;
     }
 
     public void removerReserva(Reserva pReserva){
         if(this.mReservas.contains(pReserva)){
             this.mReservas.remove(pReserva);
         } else {
-            throw new IllegalStateException("Reserva não existe para poder ser removida.");
+            System.out.println("Esta reserva não está registada!");
         }
     }
 
@@ -65,7 +65,8 @@ public class ServicoDeRestaurante {
                 }
             }
         }
-        throw new IllegalStateException("Não há mesas livres");
+        System.out.println("Não existem mesas livres!");
+        return null;
     }
 
     public Pedido criarPedido(Reserva pReserva){
@@ -80,8 +81,8 @@ public class ServicoDeRestaurante {
                      return novoPedido;
 
         }
-
-        throw new IllegalStateException("Não há mesas livres");
+        System.out.println("Esta reserva não existe!");
+        return null;
     }
 
     public void adicionarItemAPedido(Pedido pPedido, PedidoItem pItemPedido){
@@ -89,7 +90,7 @@ public class ServicoDeRestaurante {
             pItemPedido.reservarIngredientes();
             pPedido.adicionarItem(pItemPedido);
         }else{
-            throw new IllegalStateException(String.format("Não é possível preparar o item %s", pItemPedido));
+            System.out.println(String.format("Não é possível preparar o item %s", pItemPedido));
         }
     }
     public void servirPedido(Pedido pPedido){
@@ -107,7 +108,7 @@ public class ServicoDeRestaurante {
             pPedido.removerItem(pItemPedido);
             pItemPedido.libertarIngredientes();
         } else {
-            throw new IllegalStateException("O item não existe no pedido.");
+            System.out.println("O item não existe no pedido.");
         }
     }
 
@@ -119,9 +120,11 @@ public class ServicoDeRestaurante {
                 Fatura novaFatura = new Fatura(pedidoAtual);
                 this.mFaturas.add(novaFatura);
                 return novaFatura;
+
             }
         }
-        throw new IllegalStateException("Não há mesas livres");
+        System.out.println("Não foi possivel fechar a mesa!");
+        return null;
 
     }
     public void imprimirFatura(Fatura pFatura){

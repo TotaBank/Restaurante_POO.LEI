@@ -62,7 +62,7 @@ public class Pedido {
             }
             this.mListaItemsRegistados.clear();
         } else{
-            throw new IllegalStateException("Pedido não está registado/já foi servido");
+            System.out.println("Pedido não está registado/já foi servido");
         }
 
     }

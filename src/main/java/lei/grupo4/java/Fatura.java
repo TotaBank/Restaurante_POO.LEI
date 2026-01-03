@@ -6,11 +6,6 @@ public class Fatura {
     private float mValor;
     private Pedido mPedido;
     public Fatura(Pedido pPedido){
-        if (pPedido.obterEstado() != EstadoPedido.PAGO) {
-            throw new IllegalStateException(
-                    "Pedido ainda não está pago"
-            );
-        }
         this.mPedido = pPedido;
         Fatura.mQuantasFaturas +=1;
         this.mId = mQuantasFaturas;

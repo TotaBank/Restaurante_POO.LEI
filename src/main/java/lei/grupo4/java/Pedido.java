@@ -11,6 +11,7 @@ public class Pedido {
     List<PedidoItem> mListaItemsServidos;
     EstadoPedido mEstado;
     Mesa mMesa;
+    List<Observador> mObersvadores;
 
     private Pedido(
             Mesa pMesa
@@ -21,6 +22,7 @@ public class Pedido {
         this.mMesa = pMesa;
         this.mListaItemsRegistados = new ArrayList<PedidoItem>();
         this.mListaItemsServidos = new ArrayList<PedidoItem>();
+        this.mObersvadores = new ArrayList<>();
 
     }
     @Override
@@ -38,6 +40,8 @@ public class Pedido {
     public void adicionarItem(PedidoItem pItem){
         this.mEstado = EstadoPedido.REGISTADO;
         this.mListaItemsRegistados.add(pItem);
+        notificar(String.format("Novo item para preparar: %s", pItem));
+
     }
 
     public void removerItem(PedidoItem pItem){
@@ -100,6 +104,15 @@ public class Pedido {
             System.out.println(String.format("Não foi dada a quantia necessário, faltou %.2f para pagar o pedido.", troco));
         }
         return false;
+    }
+
+    public void adicionarObservador(Observador obs) {
+        this.mObersvadores.add(obs);
+    }
+    private void notificar(String mensagem) {
+        for (Observador obs : this.mObersvadores) {
+            obs.receberNotificacao(mensagem);
+        }
     }
 
 

@@ -1,4 +1,6 @@
-package lei.grupo4.java;
+package lei.grupo4.testes;
+
+import lei.grupo4.java.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,7 +55,7 @@ public class Testes {
         Pedido ultimoPedido = sr.obterPedidos().getLast();
 
         PedidoItem hamburgerQueijoBemPassado = sr.criarItemDePedido(hamburgerDeQuejo, "bem passado");
-        hamburgerQueijoBemPassado.adicionarIngredientes(queijo, 1);
+        sr.adicionarIngredientesAItemDePedido(hamburgerQueijoBemPassado,queijo, 1);
         sr.adicionarItemAPedido(ultimoPedido, hamburgerQueijoBemPassado);
         System.out.println("*".repeat(30));
         System.out.println(ultimoPedido);
@@ -64,11 +66,14 @@ public class Testes {
         System.out.println(hamburger.mostrarDetalhes());
         System.out.println(queijo.mostrarDetalhes());
         sr.adicionarItemAPedido(ultimoPedido, sr.criarItemDePedido(garrafaDeAgua, "Fria") );
+        PedidoItem hamburger5QueijoBemPassado = sr.criarItemDePedido(hamburgerDeQuejo, "bem passado");
+        hamburgerQueijoBemPassado.adicionarIngredientes(queijo, 5);
+        sr.adicionarItemAPedido(ultimoPedido, hamburgerQueijoBemPassado);
         System.out.println(ultimoPedido);
         sr.servirPedido(ultimoPedido);
         System.out.println(ultimoPedido);
         System.out.println("*".repeat(30));
-        PagamentoDinheiro cartaoDoTomas = new PagamentoDinheiro(ultimoPedido.calcularTotal(), 14);
+        PagamentoDinheiro cartaoDoTomas = new PagamentoDinheiro(ultimoPedido.calcularTotal(), 22);
 
         sr.imprimirFatura(sr.fecharMesa(mesa1, cartaoDoTomas));
         System.out.println(mesa1.obterEstado());

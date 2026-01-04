@@ -13,11 +13,12 @@ public class Testes {
         StockItem queijo = new StockItem("Queijo", 10, 5);
         StockItem pao = new StockItem("Pão", 10, 5);
         StockItem garrafaAgua = new StockItem("Garrafa de Água", 10, 5);
-
+        StockItem pickles = new StockItem("Pickles", 10, 5);
         List<StockItem> stock = new ArrayList<>();
         stock.add(hamburger);
         stock.add(queijo);
         stock.add(pao);
+        stock.add(pickles);
 
         Map<StockItem, Integer> ingredientesHamburgerQueijo = new HashMap<>();
         ingredientesHamburgerQueijo.put(hamburger, 1);
@@ -56,6 +57,7 @@ public class Testes {
 
         PedidoItem hamburgerQueijoBemPassado = sr.criarItemDePedido(hamburgerDeQuejo, "bem passado");
         sr.adicionarIngredientesAItemDePedido(hamburgerQueijoBemPassado,queijo, 1);
+        sr.adicionarIngredientesAItemDePedido(hamburgerQueijoBemPassado, pickles, 1);
         sr.adicionarItemAPedido(ultimoPedido, hamburgerQueijoBemPassado);
         System.out.println("*".repeat(30));
         System.out.println(ultimoPedido);
@@ -74,8 +76,9 @@ public class Testes {
         System.out.println(ultimoPedido);
         System.out.println("*".repeat(30));
         PagamentoDinheiro cartaoDoTomas = new PagamentoDinheiro(ultimoPedido.calcularTotal(), 22);
-
+        Fatura ultimaFatura = sr.fecharMesa(mesa1, cartaoDoTomas);
         sr.imprimirFatura(sr.fecharMesa(mesa1, cartaoDoTomas));
+        System.out.println(ultimaFatura);
         System.out.println(mesa1.obterEstado());
 
 

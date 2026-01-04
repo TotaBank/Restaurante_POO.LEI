@@ -55,6 +55,8 @@ public class PedidoItem {
                 novaQtd = 0;
             }
             this.mIngredientes.put(pStockItem, novaQtd);
+        } else {
+            this.mIngredientes.put(pStockItem, pQuantidade);
         }
     }
 

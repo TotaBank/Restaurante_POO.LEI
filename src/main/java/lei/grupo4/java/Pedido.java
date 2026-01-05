@@ -31,6 +31,8 @@ public class Pedido {
         ret+=String.format("Id: %d\tEstado: %s\tMesa: %s\nItems registados: %s\nItems servidos: %s", this.mId, this.mEstado, this.mMesa, this.mListaItemsRegistados, this.mListaItemsServidos);
         return ret;
     }
+
+
     public EstadoPedido obterEstado(){return this.mEstado;}
     public Mesa obterMesa(){return this.mMesa;}
     public int obterId(){return this.mId;}

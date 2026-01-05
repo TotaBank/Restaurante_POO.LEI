@@ -26,12 +26,18 @@ public class Mesa {
     }
     public String mostrarDetalhes(){
         String ret ="";
-        ret+=String.format("Mesa: %d\tCapacidade: %d\tEstado: %s\tPedido Atual: %s", this.mId, this.mCapacidade, this.mEstado, this.mPedidoAtual.obterId());
+        ret+=String.format("Mesa: %d\tCapacidade: %d\tEstado: %s\tPedido Atual: %d", this.mId, this.mCapacidade, this.mEstado, this.obterIdPedido());
         return ret;
     }
     @Override
     public String toString(){
         return String.format("%d", this.mId);
+    }
+    public int obterIdPedido(){
+        if (this.mPedidoAtual != null){
+            return this.mPedidoAtual.obterId();
+        }
+        return -1;
     }
 
     public int obterId(){

@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Testes {
+public class TesteFuncionamentoCompleto {
     public static void main(String[] args){
         StockItem hamburger = new StockItem("Hamburger", 10, 5);
         StockItem queijo = new StockItem("Queijo", 10, 5);
@@ -67,7 +67,9 @@ public class Testes {
         System.out.println(ultimoPedido);
         System.out.println(hamburger.mostrarDetalhes());
         System.out.println(queijo.mostrarDetalhes());
-        sr.adicionarItemAPedido(ultimoPedido, sr.criarItemDePedido(garrafaDeAgua, "Fria") );
+        PedidoItem garrafaAguaFria = sr.criarItemDePedido(garrafaDeAgua, "Fria");
+        sr.adicionarItemAPedido(ultimoPedido, garrafaAguaFria );
+        sr.removerItemAPedido(ultimoPedido, garrafaAguaFria);
         PedidoItem hamburger5QueijoBemPassado = sr.criarItemDePedido(hamburgerDeQuejo, "bem passado");
         hamburgerQueijoBemPassado.adicionarIngredientes(queijo, 5);
         sr.adicionarItemAPedido(ultimoPedido, hamburgerQueijoBemPassado);

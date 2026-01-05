@@ -87,7 +87,6 @@ public class ServicoDeRestaurante {
             Mesa mesaReservada = pReserva.obterMesa();
                     Pedido novoPedido = Pedido.criarPedido(mesaReservada);
                     this.mPedidos.add(novoPedido);
-                    mesaReservada.abrirPedido(novoPedido);
                     this.mReservas.remove(pReserva); //ou eventualmente podemos colocar num ficheiro json de registo
                     novoPedido.adicionarObservador(new AlertaCozinha());
                     return novoPedido;
@@ -171,9 +170,14 @@ public class ServicoDeRestaurante {
         System.out.println("Fatura inválida");
         }
     }
+    public void reporStock(StockItem pStockItem, int pQuantidade){
+        if(this.mStock.contains(pStockItem)){
+            pStockItem.repor(pQuantidade);
+        }
+    }
 
     public List<Reserva> obterReservas(){return this.mReservas;}
     public List<Pedido> obterPedidos(){return this.mPedidos;}
-
+    public List<MenuItem> obterMenu(){return this.mMenu;}
 
 }

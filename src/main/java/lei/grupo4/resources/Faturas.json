@@ -1,10 +1,6 @@
 {"1": {
-    "Preco": 22,
+    "Preco": 10,
     "Pedido": 1,
-    "Items": [
-        {"Hamburger de Queijo": 10},
-        {"Garrafa de Água": 2},
-        {"Hamburger de Queijo": 10}
-    ],
+    "Items": [{"Hamburger de Queijo": 10}],
     "Método de Pagamento": "DINHEIRO"
 }}

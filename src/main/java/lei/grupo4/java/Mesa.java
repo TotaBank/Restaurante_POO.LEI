@@ -26,7 +26,7 @@ public class Mesa {
     }
     public String mostrarDetalhes(){
         String ret ="";
-        ret+=String.format("Mesa: %d\tCapacidade: %d\tEstado: %s\tPedido Atual:", this.mId, this.mCapacidade, this.mEstado, this.mPedidoAtual);
+        ret+=String.format("Mesa: %d\tCapacidade: %d\tEstado: %s\tPedido Atual: %s", this.mId, this.mCapacidade, this.mEstado, this.mPedidoAtual.obterId());
         return ret;
     }
     @Override

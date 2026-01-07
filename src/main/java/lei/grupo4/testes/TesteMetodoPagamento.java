@@ -63,6 +63,13 @@ public class TesteMetodoPagamento {
         System.out.println(novaFatura);
         sr.imprimirFatura(novaFatura);
 
+        //testes adicionaiss de faturas
+        Pedido pedido2 = sr.criarPedido("Joao", 4);
+        sr.adicionarItemAPedido(pedido2, hamburgerBemPassado);
+        sr.servirPedido(pedido2);
+        PagamentoCartao pagamentoCartao = new PagamentoCartao(pedido2.calcularTotal());
+        Fatura fatura2 = sr.fecharMesa(pedido2.obterMesa(), pagamentoCartao);
+        System.out.println(fatura2);
 
 
 

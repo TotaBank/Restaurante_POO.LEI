@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class ServicoDeRestaurante {
-    private final static String mCaminhoFatura = "src/main/java/lei/grupo4/resources/Faturas.json";
+    final static String mCaminhoFatura = "src/main/java/lei/grupo4/resources/Faturas.json";
     private List<Sala> mSalas;
     private List<MenuItem> mMenu;
     private List<StockItem> mStock;
@@ -140,6 +140,7 @@ public class ServicoDeRestaurante {
                 Fatura novaFatura = new Fatura(pedidoAtual);
                 novaFatura.adicionarMetodoDePagamento(pMetodoDePagamento.obterMetodoDePagamento());
                 this.mFaturas.add(novaFatura);
+                this.imprimirFatura(novaFatura);
                 return novaFatura;
 
             }
@@ -150,22 +151,7 @@ public class ServicoDeRestaurante {
     }
     public void imprimirFatura(Fatura pFatura){
         if(pFatura != null){
-        String dados = Utilitarios.carregarOuInicializarFicheiroJSON("src/main/java/lei/grupo4/resources/Faturas.json", FicheiroJSON.OBJECT);
-        JSONObject root = new JSONObject(dados);
-        JSONArray itemsServidos = new JSONArray();
-        for(PedidoItem itemServido : pFatura.obterPedido().obterListaItemsServidos()){
-            JSONObject itemEPreco = new JSONObject();
-            itemEPreco.put(itemServido.toString(), itemServido.obterPreco());
-            itemsServidos.put(itemEPreco);
-        }
-        JSONObject fatura = new JSONObject();
-        fatura.put("Pedido", pFatura.obterPedido().obterId());
-        fatura.put("Preco", pFatura.obterPreco());
-        fatura.put("Items", itemsServidos);
-        fatura.put("Método de Pagamento", pFatura.obterMetodoDePagamento());
-        root.put(pFatura.obterId().toString(), fatura);
-
-        Utilitarios.escreverJsonEmFicheiro(root, mCaminhoFatura);
+            pFatura.imprimirFatura();
         }else{
         System.out.println("Fatura inválida");
         }

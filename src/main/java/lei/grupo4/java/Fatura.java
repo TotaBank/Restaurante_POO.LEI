@@ -60,7 +60,7 @@ public class Fatura {
             fatura.put("Pedido", this.obterPedido().obterId());
             fatura.put("Preco", this.obterPreco());
             fatura.put("Items", itemsServidos);
-            fatura.put("Método de Pagamento", this.obterMetodoDePagamento());
+            fatura.put("Metodo_Pagamento", this.obterMetodoDePagamento());
             root.put(this.obterId().toString(), fatura);
 
 

@@ -1,9 +1,11 @@
+import json
 import threading
+
 from Fatura import Fatura
 
 
 class FaturaConsumer:
-    CAMINHO_JSON_FATURAS = "src/main/java/lei/grupo4/resources/Faturas.json"
+    CAMINHO_JSON_FATURAS:str = "../src/main/java/lei/grupo4/resources/Faturas.json"
     _instance = None
     _lock = threading.Lock()
 
@@ -39,5 +41,14 @@ class FaturaConsumer:
 
     # def __init__
     @staticmethod
-    def consume_json():
-        pass
+    def consume_json(p_ficheiro:str=CAMINHO_JSON_FATURAS) -> dict:
+        with open(p_ficheiro, 'r') as file:
+            data = json.load(file)
+            return data
+    #consume_json
+
+    @property
+    def data(self): return self._data
+
+    def __str__(self):
+        return f""
